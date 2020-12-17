@@ -1,0 +1,7 @@
+{
+    "want_plaintext_hover": true,
+    "other_flags": "--v3",
+    "source": [
+        "src"
+    ]
+}

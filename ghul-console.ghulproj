@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <Target Name="CreateManifestResourceNames" />
+
+  <Target Name="CoreCompile">
+
+    <ItemGroup>
+      <GhulSources Include="src/**/*.ghul" />
+    </ItemGroup>
+
+    <Exec Command="ghul --v3 @(GhulSources) -o $(IntermediateOutputPath)$(AssemblyName).dll" />
+
+    <Copy SourceFiles="$(ProjectDir)$(IntermediateOutputPath)$(AssemblyName).dll" DestinationFolder="$(ProjectDir)$(IntermediateOutputPath)ref" />   
+  </Target>
+</Project>
