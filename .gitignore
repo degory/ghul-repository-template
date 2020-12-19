@@ -10,3 +10,5 @@ bin/
 **/*.dll
 **/*.exe
 **/*.exe.mdb
+**/*.vsix
+.assemblies.json

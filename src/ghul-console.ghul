@@ -6,7 +6,7 @@ namespace Program is
         entry() static is
             @IL.entrypoint()
 
-            Std.error.write_line("Hello world");
+            Std.error.write_line("Hello world");          
 
             return;
         si
