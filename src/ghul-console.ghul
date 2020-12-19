@@ -1,14 +1,16 @@
 namespace Program is
     use Std = System.Console;
-    
+
+    use COUNT = Shim.COUNT;
+
     // This is a very simple ghul application: it simply writes some text to the console     
     class Main is
         entry() static is
             @IL.entrypoint()
 
-            Std.error.write_line("Hello world");          
+            let x = new COUNT[int]([1, 2, 3]);
 
-            return;
+            Std.error.write_line("Hello world");
         si
     si
 si
