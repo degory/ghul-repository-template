@@ -1,16 +1,34 @@
 namespace Program is
-    use Std = System.Console;
+    use Std = IO.Std;
 
-    use COUNT = Shim.COUNT;
-
-    // This is a very simple ghul application: it simply writes some text to the console     
     class Main is
         entry() static is
             @IL.entrypoint()
 
-            let x = new COUNT[int]([1, 2, 3]);
+            let pipe =
+                [1, 2, 3, 4, 5, 6] |
+                    .filter(i: int => i > 2)
+                    .map(i: int => "'" + i + "'");
 
-            Std.error.write_line("Hello world");
+            for s in pipe do
+                Std.error.write_line("filtered: " + s);
+            od
+
+            for i in pipe.map(s: string => int.parse(s.substring(1,1))) do
+                Std.error.write_line("mapped: " + i);
+            od
+
+            [1, 2, 3, 4] | .filter(i: int => i > 1);
+
+            let joined = pipe.to_string(",");
+
+            Std.error.write_line("joined: " + joined);
+
+            let f = (i: int) => i * 2;
+
+            for i in [1, 2, 3, 4, 5, 6] | .map(f) do
+                Std.error.write_line("mapped: " + i); 
+            od
         si
     si
 si

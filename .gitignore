@@ -11,4 +11,7 @@ bin/
 **/*.exe
 **/*.exe.mdb
 **/*.vsix
+
 .assemblies.json
+output.txt
+build.txt
