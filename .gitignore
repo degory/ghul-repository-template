@@ -1,6 +1,3 @@
-# shell install scripts
-**/*.run
-
 # .NET objects
 obj/
 bin/
@@ -10,8 +7,6 @@ bin/
 **/*.dll
 **/*.exe
 **/*.exe.mdb
-**/*.vsix
 
 .assemblies.json
-output.txt
-build.txt
+.build.rsp
