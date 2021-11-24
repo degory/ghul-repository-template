@@ -77,7 +77,7 @@ jobs:
         echo "package version: ${{ steps.pick_version.outputs.package }}"
 
   build:
-    name: Build and publish NuGet package
+    name: Build and create package
     runs-on: ubuntu-latest
 
     container:
@@ -110,14 +110,3 @@ jobs:
       with:
         name: package
         path: nupkg
-
-    # - name: Publish package to GitHub
-    #   run: dotnet nuget push ./nupkg/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/degory/index.json --skip-duplicate --no-symbols true
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # - name: Publish package to NuGet
-    #   if: ${{ github.event_name == 'push' }}
-    #   run: dotnet nuget push ./nupkg/*.nupkg -k ${NUGET_TOKEN} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols true
-    #   env:
-    #     NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
