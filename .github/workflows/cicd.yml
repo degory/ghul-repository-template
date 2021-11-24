@@ -3,123 +3,110 @@
 name: CI/CD
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+
   pull_request:
   push:
-    branches:
-      - "main"
+    branches: [master, main]
+
+env:
+  CI: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
 
 jobs:
-  create_version:
+  version:
     name: Create a version number
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+    outputs:
+      tag: ${{ steps.pick_version.outputs.tag }}
+      package: ${{ steps.pick_version.outputs.package }}
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  
 
-    - name: Prepare version number
-      id: prepare_version_number
-      uses: anothrNick/github-tag-action@1.26.0
+    - name: Create version number
+      id: create_version_number
+      uses: anothrNick/github-tag-action@1.33.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true          
-        DRY_RUN: ${{ github.event_name != 'push' }}
+        WITH_V: true
         DEFAULT_BUMP: patch
-        RELEASE_BRANCHES: main
+        RELEASE_BRANCHES: main,master
 
-    - name: Capture version number
-      run: 'echo ${{ steps.prepare_version_number.outputs.new_tag }} >version.txt'
+    - name: Pick version
+      id: pick_version
+      run: |
+        VALID_VERSION_REGEX="^v[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9]+\.[0-9]+)?$"
 
-    - name: Upload version number
-      uses: actions/upload-artifact@v2
-      with:
-        name: version
-        path: version.txt
+        if [ ! -z "${MANUAL_VERSION}" ] ; then
+          echo "User supplied version: ${MANUAL_VERSION}"
+
+          VERSION="${MANUAL_VERSION}"
+        elif [ ! -z "${TAG_VERSION}" ] ; then
+          echo "Tag bump generated version: ${TAG_VERSION}"
+
+          VERSION="${TAG_VERSION}"
+        else
+          echo "Neither manual or tag version set"
+          exit 1
+        fi
+
+        if [[ ${VERSION} =~ ${VALID_VERSION_REGEX} ]] && [ "${VERSION}" != "v0.0.0" ] ; then
+          echo "Version number is valid: ${VERSION}"
+          echo "::set-output name=tag::${VERSION}"
+          echo "::set-output name=package::${VERSION:1}"
+        else
+          echo "Version number is not valid ${VERSION}"
+          exit 1
+        fi
+
+      env:
+        TAG_VERSION: ${{ steps.create_version_number.outputs.new_tag }}
+        MANUAL_VERSION: ${{ github.event.inputs.version }}        
+
+    - name: Echo version numbers
+      run: |
+        echo "tag version: ${{ steps.pick_version.outputs.tag }}"
+        echo "package version: ${{ steps.pick_version.outputs.package }}"
 
   build:
-    name: Build .NET executable
+    name: Build and create package
     runs-on: ubuntu-latest
-    container: ghul/devcontainer:dotnet
+
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+
     timeout-minutes: 10
+    needs: [version]
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Show compiler version
-      run: /usr/bin/ghul
-                    
-    - name: Publish
-      run: dotnet publish
+    - name: Add .NET tools to PATH
+      run: echo "${HOME}/.dotnet/tools" >> $GITHUB_PATH
 
-    - name: Upload .NET executable
-      uses: actions/upload-artifact@v2
-      with:
-        name: executable-dotnet
-        path: bin/Debug/net5.0/publish
+    - name: Install ghūl compiler
+      run: dotnet tool install --global ghul.compiler
 
-  test:
-    name: Test .NET executable under .NET Core
-    needs: build
-    runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/core/sdk:3.1
-    timeout-minutes: 10
+    # - name: Run tests
+    #   run: dotnet test tests/tests.ghulproj      
 
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Download .NET executable
-      uses: actions/download-artifact@v2
-      with:
-        name: executable-dotnet
-        path: .
+    - name: Create package
+      run: dotnet pack -p:Version=${{ needs.version.outputs.package }}
 
     - name: Run
-      run: ./ghul-console
-      
-  create-draft-release:
-    name: Create draft release
-    if: ${{ github.event_name	== 'push' && false }}
-    needs: [test-dotnet]
-    runs-on: "ubuntu-latest"
+      run: dotnet run
 
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Download version number
-      uses: actions/download-artifact@v2
+    - name: Upload .NET package artefact
+      if: ${{ github.event_name != 'push' }}
+      uses: actions/upload-artifact@v2
       with:
-        name: version
-        path: .
-
-    - name: Set version number variable
-      id: version
-      run: echo "::set-output name=current::`cat version.txt`"
-
-    - name: Download .NET executable
-      uses: actions/download-artifact@v2
-      with:
-        name: executable-dotnet
-        path: .
-
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.version.outputs.current }}
-        release_name: ${{ steps.version.outputs.current }}
-        draft: true
-
-    - name: Upload .NET executable asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./hello-world.exe
-        asset_name: hello-world.exe
-        asset_content_type: application/vnd.microsoft.portable-executable
-
+        name: package
+        path: nupkg
