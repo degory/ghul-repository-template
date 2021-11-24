@@ -2,7 +2,7 @@
 
 This is a template for quick-starting a [ghūl language](https://ghul.io) console application project:
 
-- The target is a .NET 5.0 console application
+- The target is a .NET 6.0 console application
 - The project is pre-configured for rich language support and build tasks in Visual Studio Code
 - Continuous integration is supported via a basic build and test pipeline running on GitHub Actions
 
@@ -14,10 +14,11 @@ This is a template for quick-starting a [ghūl language](https://ghul.io) consol
 
 - Any one of:
   - GitHub [Codespaces](https://github.com/features/codespaces)
+  - Windows 10 with [the .NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
   - Windows 10 with [Docker Desktop](https://www.docker.com/products/docker-desktop) and the VSCode [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension 
-  - Windows 10 with [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10), configured to run Linux with a recent version of [Mono](https://www.mono-project.com/), plus the VSCode [Remote - WSL](https://marketplace.visualstudio.com/items?,itemName=ms-vscode-remote.remote-wsl) extension  
+  - Windows 10 with [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10), [the .NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0), plus the VSCode [Remote - WSL](https://marketplace.visualstudio.com/items?,itemName=ms-vscode-remote.remote-wsl) extension  
+  - Linux with [the .NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
   - Linux with Docker and the VSCode [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension
-  - Linux with a recent version of [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - Visual Studio Code
 - An instance of this template in your own GitHub (click the [`Use this template`](https://github.com/degory/ghul-console-template/generate) button)
 
@@ -57,11 +58,11 @@ Visual Studio Code will create a container and a unique volume to hold your appl
 
 The ghūl compiler can be run on Linux or on WSL2 on Windows without a container, however ghūl is an experimental languguage and the compiler may be unstable: using the development container is the safer option. 
 
-If you prefer to use native Linux or WSL2 rather than the development container, then the compiler should run on any recent Linux distribution provided that Mono version 6 is installed.
+If you prefer to use native Linux or WSL2 rather than the development container, then the compiler should run on any recent Linux distribution that support .NET 6.0.
 
-### Install the .NET 5.0 development environment
+### Install the .NET 6.0 SDK
 
-Follow the instructions [here](https://dotnet.microsoft.com/download/dotnet/5.0) and install the .NET 5.0 SDK
+Follow the instructions [here](https://dotnet.microsoft.com/download/dotnet/5.0) and install the .NET 6.0 SDK
 
 
 ### Install the ghūl compiler
