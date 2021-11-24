@@ -1,14 +1,4 @@
-namespace Program is
-    use Std = System.Console;
-    
-    // This is a very simple ghul application: it simply writes some text to the console     
-    class Main is
-        entry() static is
-            @IL.entrypoint()
+// This is a very simple ghul application: it simply writes some text to the console     
+entry() =>
+    IO.Std.error.write_line("Hello world!");
 
-            Std.error.write_line("Hello world");          
-
-            return;
-        si
-    si
-si
