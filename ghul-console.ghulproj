@@ -6,12 +6,10 @@
 
   <ItemGroup>
     <GhulSources Include="src/**/*.ghul" />
-    <PackageReference Include="ghul.runtime" Version="0.0.9" />
-    <PackageReference Include="ghul.targets" Version="0.0.2" GeneratePathProperty="true" />
+    <PackageReference Include="ghul.runtime" Version="0.0.10" />
+    <PackageReference Include="ghul.targets" Version="0.0.3" GeneratePathProperty="true" />
   </ItemGroup>
 
   <Import Project="$(Pkgghul_targets)\content\build\ghul.targets.props" />
   <Import Project="$(Pkgghul_targets)\content\build\ghul.targets.targets" />
-
-
 </Project>
