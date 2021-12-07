@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <GhulSources Include="src/**/*.ghul" />
-    <PackageReference Include="ghul.runtime" Version="0.0.9" />
+    <PackageReference Include="ghul.runtime" Version="0.0.10" />
     <PackageReference Include="ghul.targets" Version="0.0.6" GeneratePathProperty="true" />
   </ItemGroup>
 
