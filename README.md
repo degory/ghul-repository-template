@@ -1,4 +1,4 @@
-# ghūl console application template
+# ghūl repository template
 
 This is a template for quick-starting a [ghūl language](https://ghul.io) console application project:
 
@@ -56,9 +56,9 @@ Visual Studio Code will create a container and a unique volume to hold your appl
 
 ## Getting started with on native Windows or Linux without using containers 
 
-The ghūl compiler can be run on Windows, on native Linux, or on WSL2 on Windows without a container, however ghūl is an experimental language and the compiler may be unstable: using the development container is the safer option. 
+The ghūl compiler can be run on native Windows, on native Linux, or on WSL2 on Windows without a container, however ghūl is an experimental language and the compiler may be unstable: using the development container is the safer option. 
 
-If you prefer to use native Linux or WSL2 rather than the development container, then the compiler will run on Windows and on any recent Linux distribution that supports the .NET 6.0 SDK.
+If you prefer not to use the development container, then the compiler should run on any host that supports the .NET 6.0 SDK.
 
 ### Install the .NET 6.0 SDK
 
