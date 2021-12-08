@@ -1,4 +1,19 @@
-// This is a very simple ghul application: it simply writes some text to the console     
-entry() =>
-    IO.Std.error.write_line("Hello world!");
+namespace Template is
+    // This is deliberately over-engineered to make it easier to demostrate unit tests.
+    // for a streamlined version of the same thing see https://github.com/degory/ghul-templates/blob/main/templates/ghul-console/src/ghul-console.ghul
+
+    entry() =>
+        new HELLO_WORLD_GREETER(IO.Std.out)
+            .greet();
+
+    class HELLO_WORLD_GREETER is
+        _writer: IO.TextWriter;
+
+        init(writer: IO.TextWriter) is
+            _writer = writer;
+        si
+
+        greet() => _writer.write_line("Hello world!");
+    si
+si
 
