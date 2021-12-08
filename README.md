@@ -54,36 +54,34 @@ Once the prerequisites for development containers are working, clone your new ap
 
 Visual Studio Code will create a container and a unique volume to hold your application source.
 
-## Getting started with on Windows with WSL2 or on native Linux 
+## Getting started with on native Windows or Linux without using containers 
 
-The ghūl compiler can be run on Linux or on WSL2 on Windows without a container, however ghūl is an experimental languguage and the compiler may be unstable: using the development container is the safer option. 
+The ghūl compiler can be run on Windows, on native Linux, or on WSL2 on Windows without a container, however ghūl is an experimental language and the compiler may be unstable: using the development container is the safer option. 
 
-If you prefer to use native Linux or WSL2 rather than the development container, then the compiler should run on any recent Linux distribution that support .NET 6.0.
+If you prefer to use native Linux or WSL2 rather than the development container, then the compiler will run on Windows and on any recent Linux distribution that supports the .NET 6.0 SDK.
 
 ### Install the .NET 6.0 SDK
 
-Follow the instructions [here](https://dotnet.microsoft.com/download/dotnet/5.0) and install the .NET 6.0 SDK
+Follow the instructions [here](https://dotnet.microsoft.com/download/dotnet/6.0) and install the .NET 6.0 SDK
 
 
 ### Install the ghūl compiler
 
-Download the latest version of the [ghūl compiler installer script](https://github.com/degory/ghul/releases/latest/download/ghul.run) and run it with Bash. For example:
+The compiler is pre-configured in this repo as a [.NET local tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools). Simply restore local .NET tools by running
 
 ```
-$ curl -L https://github.com/degory/ghul-releases/releases/latest/download/ghul.run -o ghul.run
+$ dotnet tool restore
 ```
 
-```
-$ bash ./ghul.run
-```
+(Note: if you're using Visual Studio Code and the [ghūl language Visual Studio extension](), the extension will do this step for you automatically when you open the workspace)
 
 ### Verify the compiler installation
 
-If you run the ghūl compiler from a shell with no arguments, it should report a version number:
+If you run the ghūl compiler tool from a shell with no arguments, it should report a version number:
 
 ```
-$ ghul
-ghūl v0.2.87
+$ dotnet tool run ghul-compiler
+ghūl v0.2.153
 ```
 
 ### Opening in Visual Studio Code
@@ -100,11 +98,24 @@ The default VSCode build task is auto-configured, so you can build the applicati
 - `Ctrl` + `Shift` + `B`, or
 - `Ctrl` + `Shift` + `P`, choose `Run Task`, then choose the build task from the list
 
+Or you can build from the the command line using standard .NET SDK commands
+
+```
+$ dotnet build
+```
+```
+$ dotnet pack
+```
+
 ## Running your application
 
-The build output is a simple .NET console application (`hello-world.exe`), which can be run:
-- from the command line with `dotnet run`
-- via the pre-configured VSCode test task: `Ctrl` + `Shift` + `P`, choose `Run Task`, choose the run task from the list
+The build output is a simple .NET console application (`ghul-console.exe`). The application can be run via the pre-configured VSCode test task: 
+- `Ctrl` + `Shift` + `P`, choose `Run Task`, choose the run task from the list
+
+Or it can be run from the command line with:
+```
+$ dotnet run
+```
 
 ## Customizing your application
 
