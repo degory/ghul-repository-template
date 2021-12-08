@@ -2,14 +2,28 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+
+
+    <Title>ghūl repository template</Title>
+    <PackageDescription>GitHub repository template for a ghūl programming language project</PackageDescription>
+    <RepositoryUrl>https://github.com/degory/ghul-repository-template</RepositoryUrl>
+    <PackageId>ghul.repository-template</PackageId>
+    <Authors>degory</Authors>
+    <Company>ghul.io</Company>
+    <Version>0.0.1-alpha.1</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <LicenseExpression>MIT</LicenseExpression>
+
+    <GhulCompiler>dotnet tool run ghul-compiler</GhulCompiler>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <GhulSources Include="src/**/*.ghul" />
-    <PackageReference Include="ghul.runtime" Version="0.0.10" />
-    <PackageReference Include="ghul.targets" Version="0.0.3" GeneratePathProperty="true" />
-  </ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
 
-  <Import Project="$(Pkgghul_targets)\content\build\ghul.targets.props" />
-  <Import Project="$(Pkgghul_targets)\content\build\ghul.targets.targets" />
+    <PackageReference Include="ghul.runtime" Version="0.0.10" />
+    <PackageReference Include="ghul.pipes" Version="0.0.17" />
+    <PackageReference Include="ghul.targets" Version="0.0.6" />
+  </ItemGroup>
 </Project>

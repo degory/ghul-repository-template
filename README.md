@@ -8,7 +8,7 @@ This is a template for quick-starting a [ghūl language](https://ghul.io) consol
 
 ## CI/CD status
 
- [![CI/CD](https://github.com/degory/ghul-application-template/workflows/CI/CD/badge.svg?branch=main)](https://github.com/degory/ghul-application-template/actions?query=workflow%3ACI%2FCD)
+ [![CI/CD](https://github.com/degory/ghul-repository-template/workflows/CI/CD/badge.svg?branch=main)](https://github.com/degory/ghul-repository-template/actions?query=workflow%3ACI%2FCD)
 
 ## Prerequisites
 
