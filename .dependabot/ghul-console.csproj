@@ -1,17 +1,3 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <GhulSources Include="src/**/*.ghul" />
-    <PackageReference Include="ghul.runtime" Version="0.0.10" />
-    <PackageReference Include="ghul.targets" Version="0.0.6" GeneratePathProperty="true" />
-  </ItemGroup>
-
-  <Import Project="$(Pkgghul_targets)\content\build\ghul.targets.props" />
-  <Import Project="$(Pkgghul_targets)\content\build\ghul.targets.targets" />
-
-
+  <Import Project="../ghul-console.ghulproj" />
 </Project>

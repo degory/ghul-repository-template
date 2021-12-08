@@ -5,6 +5,7 @@
 obj/
 bin/
 
+**/TestResults
 **/*.runtimeconfig.json
 **/*.il
 **/*.dll

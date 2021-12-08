@@ -4,3 +4,7 @@ updates:
     directory: ".dependabot/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "nuget"
+    directory: "unit-tests/.dependabot/"
+    schedule:
+      interval: "daily"
