@@ -1,8 +1,9 @@
 # ghūl repository template
 
-This is a template for quick-starting a [ghūl language](https://ghul.io) console application project:
+This is a GitHub template repository for quick-starting a [ghūl language](https://ghul.io) console application project:
 
 - The target is a .NET 6.0 console application
+- The standard ghūl container image is pre-configured
 - The project is pre-configured for rich language support and build tasks in Visual Studio Code
 - Continuous integration is supported via a basic build and test pipeline running on GitHub Actions
 
