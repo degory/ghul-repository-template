@@ -1,6 +1,6 @@
 # CI/CD pipeline. 
 
-name: CI/CD
+name: CICD
 
 on:
   workflow_dispatch:
@@ -176,7 +176,7 @@ jobs:
         name: package
         path: nupkg
 
-    # TODO add actual package tests here
+    # TODO: add actual package tests here
 
   publish-package:
     name: Publish the package
@@ -197,11 +197,18 @@ jobs:
         name: package
         path: nupkg
 
-    - name: Publish package to GitHub
-      if: ${{ github.actor != 'dependabot[bot]' }}
-      run: dotnet nuget push ./nupkg/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/degory/index.json --skip-duplicate --no-symbols true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: |
+        "TODO: configure for your NuGet feeds" 
+      run: |
+        echo "TODO: configure the 'publish package' job in .github/workflows/cicd.yml"
+
+    # TODO: to push the built package to GitHub replace 'your-github-username' with your GitHub
+    # user name and uncomment this step:
+    # - name: Publish package to GitHub
+    #  if: ${{ github.actor != 'dependabot[bot]' }}
+    #  run: dotnet nuget push ./nupkg/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/your-github-username/index.json --skip-duplicate --no-symbols true
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # TODO: to push the built package to NuGet, add a GitHub Actions secret named NUGET_TOKEN and
     # holding a suitable NuGet.org PAT, and then uncomment this step: 
@@ -210,3 +217,44 @@ jobs:
     #   run: dotnet nuget push ./nupkg/*.nupkg -k ${NUGET_TOKEN} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols true
     #   env:
     #     NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+
+  create_release:
+    needs: [version, publish-package]
+    name: Create release
+    runs-on: ubuntu-20.04
+
+    timeout-minutes: 5
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download package
+      uses: actions/download-artifact@v2
+      with:
+        name: package
+        path: nupkg
+
+    - name: Create changelog
+      run: git log -1 --format="%s%n%n%b%n%n" >changelog.txt
+
+    - name: Create a Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ needs.version.outputs.tag }}
+        release_name: ${{ needs.version.outputs.tag }}
+        body_path: changelog.txt
+        draft: false
+
+    - name: Upload package asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./nupkg/ghul.templates.${{ needs.version.outputs.package }}.nupkg
+        asset_name: ghul.templates.${{ needs.version.outputs.package }}.nupkg
+        asset_content_type: application/octet-stream    
