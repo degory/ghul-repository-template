@@ -255,6 +255,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./nupkg/ghul.repository.template.${{ needs.version.outputs.package }}.nupkg
-        asset_name: ghul.repository.template.${{ needs.version.outputs.package }}.nupkg
+        asset_path: ./nupkg/ghul.repository-template.${{ needs.version.outputs.package }}.nupkg
+        asset_name: ghul.repository-template.${{ needs.version.outputs.package }}.nupkg
         asset_content_type: application/octet-stream    
