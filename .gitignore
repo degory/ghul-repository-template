@@ -4,6 +4,7 @@
 # .NET objects
 obj/
 bin/
+nupkg/
 
 **/TestResults
 **/*.runtimeconfig.json
