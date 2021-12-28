@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <GhulCompiler>dotnet tool run ghul-compiler</GhulCompiler>
+    <GhulCompiler>dotnet ghul-compiler</GhulCompiler>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +14,7 @@
     <PackageReference Include="ghul.pipes" />
     <PackageReference Include="ghul.runtime" />
 
-    <ProjectReference Include="../ghul-console.ghulproj" />
+    <ProjectReference Include="../example-project.ghulproj" />
 
     <GhulSources Include="**/*.ghul" />
   </ItemGroup>
