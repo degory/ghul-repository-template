@@ -32,10 +32,12 @@ You'll need a development environment with the [.NET 6.0 SDK](https://dotnet.mic
   - go to/peek definition
   - go to symbol in file
   - go to symbol in workspace
+  - go to implementations
+  - rename symbol across workspace
  
 ## Creating your ghūl project repository from the template
 
-Click the ['Use this template'](https://github.com/degory/ghul-console-template/generate) button.
+Click the ['Use this template'](https://github.com/degory/ghul-repository-template/generate) button.
 
 ## Opening your new ghūl project repo
 
@@ -56,13 +58,10 @@ Or you can build from the the command line using standard .NET SDK commands
 ```
 $ dotnet build
 ```
-```
-$ dotnet pack
-```
 
 ## Running your application
 
-The build output is a simple .NET console application (`ghul-console.exe`). The application can be run via the pre-configured VSCode test task: 
+The build output is a simple .NET console application (`example-project`). The application can be run via the pre-configured VSCode test task: 
 - `Ctrl` + `Shift` + `P`, choose `Run Task`, choose the run task from the list
 
 Or it can be run from the command line with:
@@ -87,9 +86,9 @@ For pushes to main, the pipeline will also:
 
 ## Extending your application
 
-- The sample application executable is named `ghul-console`. You can change this by renaming `ghul-console.ghulproj`
+- The sample application executable is named `example-project`. You can change this by renaming `example-project.ghulproj`
 - Add additional `.ghul` source files to the `src/` folder
-- If you delete or rename source files, restart VSCode or reload the folder (`Ctrl` + `Shift` + `P`, `Developer: Reload Window`) (see [ghūl issue 388](https://github.com/degory/ghul/issues/388))
+- Reference additional NuGet packages via 'dotnet package add ...'
 
 ## Nice to have
 ghūl code looks best in the [Fira Code](https://github.com/tonsky/FiraCode) font. Fira Code combined with the `ss07` ligatures setting in `settings.json` gives the preferred rendering of ghūl operators/
