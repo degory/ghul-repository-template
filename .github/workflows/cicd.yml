@@ -22,33 +22,40 @@ env:
 jobs:
   version:
     name: Create a version number
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 1
     outputs:
       tag: ${{ steps.create_version.outputs.tag }}
       package: ${{ steps.create_version.outputs.package }}
 
+    permissions:
+      contents: 'write'      
+
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'    
 
     - name: Create version
       id: create_version
-      uses: degory/create-version@v0.0.1
+      uses: degory/create-version@v0.0.2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        PRERELEASE: ${{ github.event_name == 'pull_request' }}
 
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: mcr.microsoft.com/dotnet/sdk:8.0
 
     timeout-minutes: 5
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Restore local tools
       run: dotnet tool restore
@@ -61,13 +68,13 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: mcr.microsoft.com/dotnet/sdk:8.0
 
     timeout-minutes: 5
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: .NET tool restore
       run: dotnet tool restore
@@ -95,13 +102,13 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: mcr.microsoft.com/dotnet/sdk:8.0
 
     timeout-minutes: 10
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: .NET tool restore
       run: dotnet tool restore
@@ -110,7 +117,7 @@ jobs:
       run: dotnet pack -p:Version=${{ needs.version.outputs.package }}
 
     - name: Upload .NET package artefact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: package
         path: nupkg
@@ -120,16 +127,16 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: mcr.microsoft.com/dotnet/sdk:8.0
 
     timeout-minutes: 10
     needs: [version,build]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Download template package
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: package
         path: nupkg
@@ -141,16 +148,16 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: mcr.microsoft.com/dotnet/sdk:8.0
 
     timeout-minutes: 10
     needs: [build, unit-tests, integration-tests, package-tests]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Download template package
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: package
         path: nupkg
@@ -185,10 +192,10 @@ jobs:
     if: ${{ github.event_name == 'push' }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Download package
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: package
         path: nupkg

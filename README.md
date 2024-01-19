@@ -5,19 +5,19 @@
 [![Release Date](https://img.shields.io/github/release-date/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/releases) 
 [![Issues](https://img.shields.io/github/issues/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/issues) 
 [![License](https://img.shields.io/github/license/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/blob/main/LICENSE)
-[![ghūl](https://img.shields.io/badge/gh%C5%ABl-100%25!-information)](https://ghul.io)
+[![ghūl](https://img.shields.io/badge/gh%C5%ABl-100%25!-information)](https://ghul.dev)
 
 
-This is a GitHub template repository for quick-starting a [ghūl language](https://ghul.io)  project:
+This is a GitHub template repository for quick-starting a [ghūl language](https://ghul.dev)  project:
 
-- The target is a .NET 6.0 application
+- The target is a .NET 8.0 application
 - The standard [ghūl development container image](https://hub.docker.com/r/ghul/devcontainer) is pre-configured
 - The project is pre-configured for rich language support and build tasks in Visual Studio Code
 - Continuous integration is supported via a basic build and test pipeline running on GitHub Actions
 
 ## Prerequisites
 
-You'll need a development environment with the [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) installed.
+You'll need a development environment with the [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) installed.
 
 ## Recommended
 
@@ -45,7 +45,7 @@ The quickest way to get started is to open your repo in a GitHub [Codespace](htt
 
 Another quick and easy option, if you have Docker on your development machine, is to use the Visual Studio Code [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
 
-Alternatively, clone the repo to a workspace on a host that supports the [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
+Alternatively, clone the repo to a workspace on a host that supports the [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 ## Building your ghūl application
 
