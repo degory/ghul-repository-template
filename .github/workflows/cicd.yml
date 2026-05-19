@@ -32,7 +32,7 @@ jobs:
       contents: 'write'      
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: '0'    
 
@@ -55,7 +55,7 @@ jobs:
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Restore local tools
       run: dotnet tool restore
@@ -74,7 +74,7 @@ jobs:
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: .NET tool restore
       run: dotnet tool restore
@@ -82,20 +82,11 @@ jobs:
     - name: Build
       run: dotnet build
 
-    - name: Run
-      id: run
+    - name: Run and verify output
       run: |
         STDOUT=$(dotnet run)
-        echo "::set-output name=stdout::${STDOUT}"
-
-    - name: Test
-      run: |
-        if [ "${STDOUT}" != "Hello world!" ] ; then
-          exit 1
-        fi
-
-      env:
-        STDOUT: ${{ steps.run.outputs.stdout }}
+        echo "Output: ${STDOUT}"
+        test "${STDOUT}" = "Hello world!"
 
   build:
     name: Build the package
@@ -108,7 +99,7 @@ jobs:
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: .NET tool restore
       run: dotnet tool restore
@@ -133,7 +124,7 @@ jobs:
     needs: [version,build]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Download template package
       uses: actions/download-artifact@v4
@@ -154,7 +145,7 @@ jobs:
     needs: [build, unit-tests, integration-tests, package-tests]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Download template package
       uses: actions/download-artifact@v4
@@ -186,13 +177,18 @@ jobs:
   create-release:
     needs: [version, publish-package]
     name: Create release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     timeout-minutes: 5
     if: ${{ github.event_name == 'push' }}
 
+    permissions:
+      contents: 'write'
+
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: '0'
 
     - name: Download package
       uses: actions/download-artifact@v4
@@ -203,23 +199,11 @@ jobs:
     - name: Create changelog
       run: git log -1 --format="%s%n%n%b%n%n" >changelog.txt
 
-    - name: Create a Release
-      id: create_release
-      uses: actions/create-release@v1
+    - name: Create a release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ needs.version.outputs.tag }}
-        release_name: ${{ needs.version.outputs.tag }}
-        body_path: changelog.txt
-        draft: false
-
-    - name: Upload package asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./nupkg/example-package.${{ needs.version.outputs.package }}.nupkg
-        asset_name: example-package.${{ needs.version.outputs.package }}.nupkg
-        asset_content_type: application/octet-stream
+      run: |
+        gh release create "${{ needs.version.outputs.tag }}" \
+          ./nupkg/example-package.${{ needs.version.outputs.package }}.nupkg \
+          --title "${{ needs.version.outputs.tag }}" \
+          --notes-file changelog.txt
