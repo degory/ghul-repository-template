@@ -62,7 +62,7 @@ jobs:
           # pull request builds get a prerelease version so they can
           # never collide with a real release
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            package="${package}-pre.${{ github.run_number }}"
+            package="${package}-beta.${{ github.run_number }}"
           fi
         fi
         echo "tag=v${package}" >> "$GITHUB_OUTPUT"
