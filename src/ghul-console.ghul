@@ -3,7 +3,7 @@ namespace Template is
     // for a streamlined version of the same thing see https://github.com/degory/ghul-templates/blob/main/templates/ghul-console/src/ghul-console.ghul
 
     entry() =>
-        new HELLO_WORLD_GREETER(IO.Std.out)
+        HELLO_WORLD_GREETER(IO.Std.out)
             .greet();
 
     class HELLO_WORLD_GREETER is

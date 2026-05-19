@@ -1,6 +1,6 @@
 # ghūl repository template
 
-[![CI/CD](https://img.shields.io/github/workflow/status/degory/ghul-repository-template/CICD)](https://github.com/degory/ghul-repository-template/actions?query=workflow%3ACICD)
+[![CI/CD](https://img.shields.io/github/actions/workflow/status/degory/ghul-repository-template/cicd.yml?branch=main)](https://github.com/degory/ghul-repository-template/actions?query=workflow%3ACICD)
 [![Release](https://img.shields.io/github/v/release/degory/ghul-repository-template?label=release)](https://github.com/degory/ghul-repository-template/releases)
 [![Release Date](https://img.shields.io/github/release-date/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/releases) 
 [![Issues](https://img.shields.io/github/issues/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/issues) 
