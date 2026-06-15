@@ -32,7 +32,7 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: '0'
 
@@ -74,13 +74,13 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:8.0
+      image: mcr.microsoft.com/dotnet/sdk:10.0
 
     timeout-minutes: 5
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Restore local tools
       run: dotnet tool restore
@@ -93,13 +93,13 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:8.0
+      image: mcr.microsoft.com/dotnet/sdk:10.0
 
     timeout-minutes: 5
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: .NET tool restore
       run: dotnet tool restore
@@ -118,13 +118,13 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: mcr.microsoft.com/dotnet/sdk:8.0
+      image: mcr.microsoft.com/dotnet/sdk:10.0
 
     timeout-minutes: 10
     needs: [version]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: .NET tool restore
       run: dotnet tool restore
@@ -133,7 +133,7 @@ jobs:
       run: dotnet pack -p:Version=${{ needs.version.outputs.package }}
 
     - name: Upload .NET package artefact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: package
         path: nupkg
@@ -143,16 +143,16 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:8.0
+      image: mcr.microsoft.com/dotnet/sdk:10.0
 
     timeout-minutes: 10
     needs: [version,build]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Download template package
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: package
         path: nupkg
@@ -164,16 +164,16 @@ jobs:
     runs-on: ubuntu-latest
 
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:8.0
+      image: mcr.microsoft.com/dotnet/sdk:10.0
 
     timeout-minutes: 10
     needs: [build, unit-tests, integration-tests, package-tests]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Download template package
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: package
         path: nupkg
@@ -211,12 +211,12 @@ jobs:
       contents: 'write'
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: '0'
 
     - name: Download package
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: package
         path: nupkg
