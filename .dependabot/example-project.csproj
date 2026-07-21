@@ -1,3 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../example-project.ghulproj" />
+  <!--
+    Dependabot only reads .csproj/.vbproj/.fsproj/.proj, so it never opens
+    example-project.ghulproj. This file stands in for it: the package reference
+    and its version come from Directory.Build.props above, which MSBuild applies
+    to any project in this tree, so evaluating this file surfaces the same
+    dependencies the real project has. Nothing builds it.
+
+    It deliberately does not import the .ghulproj. That project carries its own
+    Sdk attribute, so importing it here imports the SDK props and targets a
+    second time and MSBuild discards the duplicates (MSB4011) - and the
+    .ghulproj declares no package references of its own, so the import adds
+    nothing to find.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
 </Project>
