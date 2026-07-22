@@ -1,9 +1,10 @@
 <Project>
   <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ghul.runtime" Version="5.5.1" />
+    <PackageReference Include="ghul.runtime" />
   </ItemGroup>
 </Project>
