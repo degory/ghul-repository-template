@@ -172,7 +172,6 @@ jobs:
     # TODO: to push the built package to GitHub replace 'your-github-username' with your GitHub
     # user name and uncomment this step:
     # - name: Publish package to GitHub
-    #  if: ${{ github.actor != 'dependabot[bot]' }}
     #  run: dotnet nuget push ./nupkg/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/your-github-username/index.json --skip-duplicate --no-symbols true
     #  env:
     #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
