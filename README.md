@@ -92,6 +92,6 @@ For pushes to main, the pipeline will also:
 
 ## Nice to have
 ghūl code looks best in the [Fira Code](https://github.com/tonsky/FiraCode) font. Fira Code combined with the `ss07` ligatures setting in `settings.json` gives the preferred rendering of ghūl operators/
-## issues
+## Issues
 
 [View open issues](https://github.com/degory/ghul/issues?q=is%3Aopen+is%3Aissue+label%3Aghul-repository-template) or [raise a new one](https://github.com/degory/ghul/issues/new?labels=ghul-repository-template).
