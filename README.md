@@ -3,7 +3,7 @@
 [![CI/CD](https://img.shields.io/github/actions/workflow/status/degory/ghul-repository-template/cicd.yml?branch=main)](https://github.com/degory/ghul-repository-template/actions?query=workflow%3ACICD)
 [![Release](https://img.shields.io/github/v/release/degory/ghul-repository-template?label=release)](https://github.com/degory/ghul-repository-template/releases)
 [![Release Date](https://img.shields.io/github/release-date/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/releases) 
-[![Issues](https://img.shields.io/github/issues/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/issues) 
+[![Issues](https://img.shields.io/github/issues-search/degory/ghul?query=is%3Aopen%20is%3Aissue%20label%3Aghul-repository-template&label=issues)](https://github.com/degory/ghul/issues?q=is%3Aopen+is%3Aissue+label%3Aghul-repository-template) 
 [![License](https://img.shields.io/github/license/degory/ghul-repository-template)](https://github.com/degory/ghul-repository-template/blob/main/LICENSE)
 [![ghūl](https://img.shields.io/badge/gh%C5%ABl-100%25!-information)](https://ghul.dev)
 
