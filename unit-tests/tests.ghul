@@ -17,11 +17,9 @@ namespace Template.Tests is
 
             test_object.greet();
 
-            assert 
-                string_writer
-                    .to_string()
-                    .trim()
-                =~ "Hello world!";
+            let written = string_writer.to_string().trim();
+
+            assert written =~ "Hello world!";
         si
     si
 si
