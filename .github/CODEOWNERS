@@ -7,7 +7,6 @@
 # Scope is deliberately narrow — NOT a `*` catch-all, which would require
 # code-owner review on every PR. Raising VERSION cuts a minor/major release,
 # so it is gated here; the workflows and CODEOWNERS are gated so the
-# release/versioning machinery can't change unreviewed.
-/VERSION              @your-github-username
+# release machinery can't change unreviewed.
 /.github/workflows/   @your-github-username
 /.github/CODEOWNERS   @your-github-username
